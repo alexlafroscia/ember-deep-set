@@ -44,24 +44,7 @@ export default function deepSet(obj, key, value) {
       allKeys[i + 1] && isObject(currentValue)  ? currentValue :
       allKeys[i + 1] && !isObject(currentValue) ? {} :
       value;
-    if (valueToSet === undefined) {
-      // ember's set method does not handle undefined values correctly in older versions
-      // https://github.com/emberjs/ember.js/issues/14270
-      if (
-        acc.hasOwnProperty(currentKey) ||
-        typeof acc.setUnknownProperty !== 'function'
-      ) {
-        acc[currentKey] = valueToSet;
-        if (typeof acc.notifyPropertyChange === 'function') {
-          acc.notifyPropertyChange(currentKey);
-        }
-      } else {
-        acc.setUnknownProperty(currentKey, valueToSet);
-      }
-      return valueToSet;
-    } else {
-      return set(acc, currentKey, valueToSet);
-    }
+    return set(acc, currentKey, valueToSet);
   }, obj);
   return value;
 }
